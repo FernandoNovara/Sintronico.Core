@@ -1,15 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="Loggins\**" />
+    <EmbeddedResource Remove="Loggins\**" />
+    <None Remove="Loggins\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Loggins\" />
     <Folder Include="Excepctions\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
+    <Folder Include="Logging\" />
   </ItemGroup>
 
   <ItemGroup>
