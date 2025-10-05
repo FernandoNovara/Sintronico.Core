@@ -5,22 +5,16 @@ namespace Application.Services
 {
     public class BikeServices
     {
-        private readonly IBikeRepository _bikeRepository;
-
-        public BikeServices(IBikeRepository bikeRepository)
+        public bool ValidationBike(int page = 1, int pageSize = 10, string? category = null)
         {
-            _bikeRepository = bikeRepository;
-        }
-
-        public async Task<List<BikeDTO>> GetAllBikes()
-        {
-            var list = await _bikeRepository.GetAllAsync();
-            return list.Select(b => new BikeDTO
+            if (page > 0)
             {
-                BikeId = b.BikeId,
-                Model = b.Model,
-                Category = b.Category
-            }).ToList();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IBikeRepository
+    public interface IBikeRepository : IRepository<Bike>
     {
-        Task<List<Bike>> GetAllAsync();
     }
 }

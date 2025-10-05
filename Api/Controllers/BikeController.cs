@@ -14,11 +14,23 @@ public class BikeController : ControllerBase
         _bikeServices = bikeServices;
     }
 
+    /// <summary>
+    /// Obtiene bicicletas paginadas con filtro por categoría.
+    /// </summary>
     [HttpGet]
-    public async Task<IActionResult> GetAllBikes()
+    [Route("api/v1/bikes")]
+    public async Task<IActionResult> GetAllBikes([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] string? category = null)
     {
-        var bikes = await _bikeServices.GetAllBikes();
-        return Ok(bikes);
+        try
+        {
+            var bikes = await _bikeServices.GetAllBikes(page, pageSize, category);
+            return Ok(bikes);
+        }
+        catch (Exception ex)
+        {
+            
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
     }
 
 }

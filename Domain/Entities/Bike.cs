@@ -18,4 +18,9 @@ public class Bike
     /// Category of the bike (MTB, Ruta, Gravel, Urbana, Plegable)
     /// </summary>
     public string Category { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Color of the bike 
+    /// </summary>
+    public string Color { get; set; } = string.Empty;
 }

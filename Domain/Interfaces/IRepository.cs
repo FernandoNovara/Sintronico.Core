@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    internal class IRepository
+    public interface IRepository<T>
     {
+        Task<List<T>> GetAllAsync(int page = 1, int pageSize = 10, string? category = null);
     }
 }

@@ -20,6 +20,9 @@ namespace Infrastructure.Data
             builder.Property(b => b.Category)
                    .HasMaxLength(50)
                    .IsRequired();
+
+            builder.Property(b => b.Color)
+                   .HasMaxLength(100);
         }
     }
 }

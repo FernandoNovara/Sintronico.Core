@@ -12,9 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Excepctions\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Logging\" />
   </ItemGroup>
 
   <ItemGroup>
