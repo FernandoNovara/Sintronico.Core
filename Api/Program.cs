@@ -1,22 +1,28 @@
+using Application.Interfaces;
 using Application.Services;
 using Domain.Interfaces;
 using Infrastructure;
 using Infrastructure.Logging;
+using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 LoggerConfig.ConfigureLogging();
 builder.Host.UseSerilog();
 
-builder.Services.AddScoped<ILogService<LogService>,LogService>();
+builder.Services.AddScoped<ILogService<LogService>, LogService>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+     .AddJsonOptions(opt =>
+     {
+         opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+     });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -33,8 +39,9 @@ builder.Services.AddDbContext<SintronicoDBContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IBikeRepository, BikeRepository>();
-builder.Services.AddScoped<BikeServices>();
-//builder.Services.AddScoped<ILogService, LogService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBikeService, BikeService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddCors(
     options =>

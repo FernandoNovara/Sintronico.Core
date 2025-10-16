@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.DTOs
+﻿namespace Application.DTOs
 {
-    public class BikeDTO
-    {
-        public Guid BikeId { get; set; }
-
-        public string Model { get; set; } = string.Empty;
-
-        public string Category { get; set; } = string.Empty;
-    }
+    public record BikeDto(
+        Guid BikeId,
+        string Model,
+        string Category,
+        string Color,
+        BikeState State,
+        DateTime CreatedAt,
+        DateTime LastUpdatedAt,
+        string Observations,
+        double Price
+    );
 }

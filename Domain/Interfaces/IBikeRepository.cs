@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Interfaces
+﻿namespace Domain.Interfaces
 {
     public interface IBikeRepository : IRepository<Bike>
     {
+        Task<List<Bike>> GetAllAsync(int page = 1, int pageSize = 10, string? category = null);
     }
 }

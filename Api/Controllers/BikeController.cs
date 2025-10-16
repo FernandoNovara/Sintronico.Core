@@ -1,4 +1,4 @@
-using Application.Services;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -7,11 +7,11 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class BikeController : ControllerBase
 {
-    private readonly BikeServices _bikeServices;
+    private readonly IBikeService _bikeService;
 
-    public BikeController(BikeServices bikeServices)
+    public BikeController(IBikeService bikeService)
     {
-        _bikeServices = bikeServices;
+        _bikeService = bikeService;
     }
 
     /// <summary>
@@ -23,12 +23,12 @@ public class BikeController : ControllerBase
     {
         try
         {
-            var bikes = await _bikeServices.GetAllBikes(page, pageSize, category);
-            return Ok(bikes);
+            var result = await _bikeService.GetPagedAsync(page, pageSize, category);
+            return Ok(result);
         }
         catch (Exception ex)
         {
-            
+
             return StatusCode(500, "An error occurred while processing your request.");
         }
     }

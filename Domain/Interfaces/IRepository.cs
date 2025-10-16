@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Interfaces
+﻿namespace Domain.Interfaces
 {
     public interface IRepository<T>
     {
-        Task<List<T>> GetAllAsync(int page = 1, int pageSize = 10, string? category = null);
+        Task<List<T>> GetAllAsync();
+
+        Task<T?> GetByIdAsync(Guid id);
+
+        Task AddAsync(T entity);
+
+        Task UpdateAsync(T entity);
+
+        Task DeleteAsync(Guid id);
     }
 }
