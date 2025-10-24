@@ -49,6 +49,8 @@ public class Bike
     /// </summary>
     public double Price { get; set; } = 0.0;
 
+    public Bike() { }
+
     public Bike(Guid id, string model, string category, string color, double price)
     {
         BikeId = id;

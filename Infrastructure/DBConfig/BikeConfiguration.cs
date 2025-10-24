@@ -23,6 +23,21 @@ namespace Infrastructure.Data
 
             builder.Property(b => b.Color)
                    .HasMaxLength(100);
+
+            builder.Property(b => b.State)
+                   .IsRequired();
+
+            builder.Property(b => b.CreatedAt)
+                   .IsRequired();
+
+            builder.Property(b => b.LastUpdatedAt);
+
+            builder.Property(b => b.Observations)
+                   .HasMaxLength(300);
+
+            builder.Property(b => b.Price)
+                   .HasColumnType("decimal(10,2)")
+                   .IsRequired();
         }
     }
 }

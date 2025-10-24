@@ -45,6 +45,8 @@ namespace Domain.Entities
         /// </summary>
         public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
+        public User() { }
+
         public User(Guid userId, string name, string lastName, string email, string passwordHash, UserRole role, DateTime createdAt)
         {
             if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email is required");

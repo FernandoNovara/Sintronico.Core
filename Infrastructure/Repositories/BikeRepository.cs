@@ -1,5 +1,7 @@
 ﻿using Domain;
 using Domain.Interfaces;
+using Infrastructure.Excepctions;
+using Infrastructure.Logging;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services
@@ -7,10 +9,12 @@ namespace Infrastructure.Services
     public class BikeRepository : IBikeRepository
     {
         private readonly SintronicoDBContext _context;
+        private readonly ILogService<LogService> _log;
 
-        public BikeRepository(SintronicoDBContext context)
+        public BikeRepository(SintronicoDBContext context, ILogService<LogService> log)
         {
             _context = context;
+            _log = log;
         }
 
         public Task AddAsync(Bike entity)
@@ -25,13 +29,17 @@ namespace Infrastructure.Services
 
         public async Task<List<Bike>> GetAllAsync()
         {
+            _log.LogInfo("BikeRepository.GetAllAsync - init");
             try
             {
-                return await _context.Bikes.ToListAsync();
+                var list = await _context.Bikes.AsNoTracking().ToListAsync();
+                _log.LogInfo("BikeRepository.GetAllAsync - finish succesful");
+                return list;
             }
             catch (Exception ex)
             {
-                throw new Exception("Error retrieving bikes from database.", ex);
+                _log.LogError($"BikeRepository.GetAllAsync - error: {ex.Message}");
+                throw new InfrastructureException("Error retrieving bikes from database.", ex);
             }
         }
 
