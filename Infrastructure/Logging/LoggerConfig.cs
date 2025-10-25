@@ -1,6 +1,4 @@
-﻿using Serilog;
-
-namespace Infrastructure.Logging
+﻿namespace Infrastructure.Logging
 {
     public class LoggerConfig
     {
