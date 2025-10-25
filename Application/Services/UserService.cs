@@ -20,7 +20,7 @@ namespace Application.Services
             if (page <= 0 || pageSize <= 0)
                 throw new ApplicationException("Invalid parameters.");
 
-            var user = await _userRepository.GetAllAsync();
+            var user = await _userRepository.GetPagedAsync(page, pageSize, role);
 
             user = user.Where(b => b.Role == role).ToList();
 

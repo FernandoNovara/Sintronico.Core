@@ -1,10 +1,4 @@
-﻿using Domain;
-using Domain.Interfaces;
-using Infrastructure.Excepctions;
-using Infrastructure.Logging;
-using Microsoft.EntityFrameworkCore;
-
-namespace Infrastructure.Services
+﻿namespace Infrastructure.Services
 {
     public class BikeRepository : IBikeRepository
     {
@@ -27,7 +21,8 @@ namespace Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public async Task<List<Bike>> GetAllAsync()
+
+        public async Task<List<Bike>> GetAllAsync(int page = 1, int pageSize = 10, string? category = null)
         {
             _log.LogInfo("BikeRepository.GetAllAsync - init");
             try
@@ -39,13 +34,8 @@ namespace Infrastructure.Services
             catch (Exception ex)
             {
                 _log.LogError($"BikeRepository.GetAllAsync - error: {ex.Message}");
-                throw new InfrastructureException("Error retrieving bikes from database.", ex);
+                throw new InfrastructureException("Error retrieving bikes from database.", _log, ex);
             }
-        }
-
-        public Task<List<Bike>> GetAllAsync(int page = 1, int pageSize = 10, string? category = null)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<Bike?> GetByIdAsync(Guid id)

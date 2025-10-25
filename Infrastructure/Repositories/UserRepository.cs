@@ -1,8 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Enums;
-using Domain.Interfaces;
-
-namespace Infrastructure.Repositories
+﻿namespace Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -16,12 +12,7 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<User>> GetAllAsync(int page = 1, int pageSize = 10, string? category = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<User>> GetAllAsync()
+        public Task<List<User>> GetAllAsync(int page = 1, int pageSize = 10, UserRole? role = null)
         {
             throw new NotImplementedException();
         }
