@@ -38,14 +38,65 @@
             }
         }
 
-        public Task<Bike?> GetByIdAsync(Guid id)
+        public async Task<Bike?> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            _log.LogInfo("BikeRepository.GetByIdAsync - init");
+            try
+            {
+                var bike = await _context.Bikes.FirstOrDefaultAsync(x => x.BikeId == id);
+                _log.LogInfo("BikeRepository.GetByIdAsync - finish succesful");
+                return bike;
+            }
+            catch (Exception ex)
+            {
+                _log.LogError($"BikeRepository.GetByIdAsync - error: {ex.Message}");
+                throw new InfrastructureException("Error retrieving bike from database.", _log, ex);
+            }
         }
 
-        public Task UpdateAsync(Bike entity)
+        public async Task<bool> UpdateAsync(Bike entity)
         {
-            throw new NotImplementedException();
+            _log.LogInfo("BikeRepository.UpdateAsync - init");
+            try
+            {
+                var bike = await _context.Bikes.FirstOrDefaultAsync(x => x.BikeId == entity.BikeId);
+
+                bike!.Category = entity.Category;
+                bike.Color = entity.Color;
+                bike.Observations = entity.Observations;
+                bike.Price = entity.Price;
+
+                var res = await _context.SaveChangesAsync() > 0;
+
+                _log.LogInfo("BikeRepository.UpdateAsync - finish succesful");
+                return res;
+            }
+            catch (Exception ex)
+            {
+                _log.LogError($"BikeRepository.UpdateAsync - error: {ex.Message}");
+                throw new InfrastructureException($"An error occurred while updating information for bike {entity.BikeId}.", _log, ex);
+            }
+        }
+
+        public async Task<bool> ChangeState(Guid BikeId, BikeState state)
+        {
+            _log.LogInfo("BikeRepository.ChangeState - init");
+            try
+            {
+                Bike? bike = await _context.Bikes.FirstOrDefaultAsync(x => x.BikeId == BikeId);
+
+                bike!.State = state;
+
+                var res = await _context.SaveChangesAsync() > 0;
+
+                _log.LogInfo("BikeRepository.ChangeState - finish succesful");
+                return res;
+            }
+            catch (Exception ex)
+            {
+                _log.LogError($"BikeRepository.ChangeState - error: {ex.Message}");
+                throw new InfrastructureException("An error occurred while updating the bike status in the database.", _log, ex);
+            }
         }
     }
 }
