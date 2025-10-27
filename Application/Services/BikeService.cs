@@ -1,8 +1,4 @@
-﻿using Application.Interfaces;
-using Application.Mappers;
-using Domain.Interfaces;
-
-namespace Application.Services
+﻿namespace Application.Services
 {
     public class BikeService : IBikeService
     {
@@ -33,6 +29,43 @@ namespace Application.Services
                 total = total,
                 items = items
             };
+        }
+
+        public async Task<BikeDto> GetBike(Guid BikeId)
+        {
+            if (BikeId == Guid.Empty)
+                throw new ApplicationException("Invalid BikeId.");
+
+            var bike = await _bikeRepository.GetByIdAsync(BikeId);
+
+            if (bike == null)
+                throw new ApplicationException("Bike not found.");
+
+            return BikeMapper.ToDto(bike);
+        }
+
+        public async Task<bool> UpdateBikeInfo(Bike entity)
+        {
+            if (entity.BikeId == Guid.Empty)
+            {
+                throw new ApplicationException("Invalid BikeId.");
+            }
+
+            bool res = await _bikeRepository.UpdateAsync(entity);
+
+            return res;
+        }
+
+        public Task<bool> ChangeStatus(Guid BikeId, BikeState state)
+        {
+            if (BikeId == Guid.Empty)
+            {
+                throw new ApplicationException("Invalid BikeId.");
+            }
+
+            var res = _bikeRepository.ChangeState(BikeId, state);
+
+            return res;
         }
     }
 }

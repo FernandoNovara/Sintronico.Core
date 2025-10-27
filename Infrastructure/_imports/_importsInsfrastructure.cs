@@ -6,3 +6,4 @@ global using Infrastructure.Excepctions;
 global using Infrastructure.Logging;
 global using Microsoft.EntityFrameworkCore;
 global using Serilog;
+
