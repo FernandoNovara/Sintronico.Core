@@ -4,7 +4,7 @@ using Domain.Enums;
 namespace Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]/")]
+[Route("api/v1")]
 public class BikeController : ControllerBase
 {
     private readonly IBikeService _bikeService;
@@ -18,7 +18,7 @@ public class BikeController : ControllerBase
     /// Obtiene bicicletas paginadas con filtro por categoría.
     /// </summary>
     [HttpGet]
-    [Route("/Bikes")]
+    [Route("Bikes")]
     [ProducesResponseType(typeof(BikeDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -48,7 +48,7 @@ public class BikeController : ControllerBase
     /// <param name="bikeId">The unique identifier of the bike.</param>
     /// <returns>The bike's information if found; otherwise, an error response.</returns>
     [HttpGet]
-    [Route("v1/BikesById")]
+    [Route("BikesById")]
     [ProducesResponseType(typeof(BikeDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -70,7 +70,7 @@ public class BikeController : ControllerBase
     }
 
 
-    [HttpPut("v1/{id}")]
+    [HttpPut("{id}")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -91,7 +91,7 @@ public class BikeController : ControllerBase
         }
     }
 
-    [HttpPatch("v1/{id}/State")]
+    [HttpPatch("{id}/State")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
