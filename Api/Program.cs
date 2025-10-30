@@ -1,16 +1,3 @@
-using Application.Interfaces;
-using Application.Services;
-using Domain.Interfaces;
-using Infrastructure;
-using Infrastructure.Logging;
-using Infrastructure.Repositories;
-using Infrastructure.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using Serilog;
-using System.Reflection;
-using System.Text.Json.Serialization;
-
 var builder = WebApplication.CreateBuilder(args);
 
 LoggerConfig.ConfigureLogging();

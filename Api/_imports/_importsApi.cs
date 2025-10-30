@@ -1,5 +1,16 @@
 ﻿global using Application.DTOs;
 global using Application.Interfaces;
+global using Application.Services;
+global using Domain.Interfaces;
+global using Infrastructure;
 global using Infrastructure.Excepctions;
+global using Infrastructure.Logging;
+global using Infrastructure.Repositories;
+global using Infrastructure.Services;
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.OpenApi.Models;
+global using Serilog;
 global using System.ComponentModel.DataAnnotations;
+global using System.Reflection;
+global using System.Text.Json.Serialization;

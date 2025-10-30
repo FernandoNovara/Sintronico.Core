@@ -4,7 +4,7 @@ using Domain.Enums;
 namespace Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]/v1")]
+[Route("api/[controller]/")]
 public class BikeController : ControllerBase
 {
     private readonly IBikeService _bikeService;
@@ -48,7 +48,7 @@ public class BikeController : ControllerBase
     /// <param name="bikeId">The unique identifier of the bike.</param>
     /// <returns>The bike's information if found; otherwise, an error response.</returns>
     [HttpGet]
-    [Route("/BikesById")]
+    [Route("v1/BikesById")]
     [ProducesResponseType(typeof(BikeDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -70,7 +70,7 @@ public class BikeController : ControllerBase
     }
 
 
-    [HttpPut("/{id}")]
+    [HttpPut("v1/{id}")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -91,7 +91,7 @@ public class BikeController : ControllerBase
         }
     }
 
-    [HttpPatch("/{id}/state")]
+    [HttpPatch("v1/{id}/State")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
