@@ -4,7 +4,7 @@ using Domain.Enums;
 namespace Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]/")]
+[Route("api/v1")]
 public class BikeController : ControllerBase
 {
     private readonly IBikeService _bikeService;
@@ -18,7 +18,7 @@ public class BikeController : ControllerBase
     /// Obtiene bicicletas paginadas con filtro por categoría.
     /// </summary>
     [HttpGet]
-    [Route("/Bikes")]
+    [Route("Bikes")]
     [ProducesResponseType(typeof(BikeDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -41,22 +41,21 @@ public class BikeController : ControllerBase
         }
     }
 
-
     /// <summary>
     /// Retrieves a bike by its unique identifier.
     /// </summary>
-    /// <param name="bikeId">The unique identifier of the bike.</param>
+    /// <param name="Id">The unique identifier of the bike.</param>
     /// <returns>The bike's information if found; otherwise, an error response.</returns>
     [HttpGet]
-    [Route("v1/BikesById")]
+    [Route("Bike/{id:Guid}")]
     [ProducesResponseType(typeof(BikeDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetBike([FromQuery, Required] Guid bikeId)
+    public async Task<IActionResult> GetBike([FromQuery, Required] Guid Id)
     {
         try
         {
-            var result = await _bikeService.GetBike(bikeId);
+            var result = await _bikeService.GetBike(Id);
             return Ok(result);
         }
         catch (InfrastructureException ex)
@@ -70,7 +69,8 @@ public class BikeController : ControllerBase
     }
 
 
-    [HttpPut("v1/{id}")]
+    [HttpPut]
+    [Route("Bike")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -91,15 +91,15 @@ public class BikeController : ControllerBase
         }
     }
 
-    [HttpPatch("v1/{id}/State")]
+    [HttpPatch("{id:Guid}/State")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> ChangeStatus([FromQuery, Required] Guid bikeId, [FromQuery, Required] BikeState state)
+    public async Task<IActionResult> ChangeStatus([FromQuery, Required] Guid id, [FromQuery, Required] BikeState state)
     {
         try
         {
-            var result = await _bikeService.ChangeStatus(bikeId, state);
+            var result = await _bikeService.ChangeStatus(id, state);
             return Ok(result);
         }
         catch (InfrastructureException ex)

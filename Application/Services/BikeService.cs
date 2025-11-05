@@ -51,6 +51,8 @@
                 throw new ApplicationException("Invalid BikeId.");
             }
 
+            entity.LastUpdatedAt = DateTime.UtcNow;
+
             bool res = await _bikeRepository.UpdateAsync(entity);
 
             return res;
@@ -64,6 +66,31 @@
             }
 
             var res = _bikeRepository.ChangeState(BikeId, state);
+
+            return res;
+        }
+
+        public async Task<bool> AddBike(Bike entity)
+        {
+
+                entity.BikeId = Guid.NewGuid();
+                entity.CreatedAt = DateTime.UtcNow;
+                entity.LastUpdatedAt = DateTime.UtcNow;
+                entity.ChangeState(BikeState.Available);
+
+                bool res = await _bikeRepository.AddAsync(entity);
+
+                return res;
+        }
+
+        public async Task<bool> DeleteBike(Guid BikeId)
+        {
+            if (BikeId == Guid.Empty) 
+            {
+                throw new ApplicationException("Invalid BikeId.");
+            }
+
+            bool res = await _bikeRepository.DeleteAsync(BikeId);
 
             return res;
         }

@@ -73,7 +73,7 @@ public class Bike
     {
         return State switch
         {
-            BikeState.Available => newState is BikeState.Reserved or BikeState.Rented or BikeState.Sold,
+            BikeState.Available => newState is BikeState.Reserved or BikeState.Rented or BikeState.Sold or BikeState.Maintenance,
             BikeState.Maintenance => newState == BikeState.Repaired,
             BikeState.Reserved => newState is BikeState.Rented or BikeState.Sold,
             BikeState.Repaired => newState == BikeState.Available,
