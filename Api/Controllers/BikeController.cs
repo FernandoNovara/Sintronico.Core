@@ -15,7 +15,7 @@ public class BikeController : ControllerBase
     }
 
     /// <summary>
-    /// Obtiene bicicletas paginadas con filtro por categoría.
+    /// Gets paginated bikes filtered by category.
     /// </summary>
     [HttpGet]
     [Route("Bikes")]
@@ -68,7 +68,34 @@ public class BikeController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Adds a new bike to the system.
+    /// </summary>
+    [HttpPost]
+    [Route("Bike")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> AddBike([FromBody] BikeDto bike)
+    {
+        try
+        {
+            var result = await _bikeService.AddBike(BikeMapper.ToDomain(bike));
+            return Ok(result);
+        }
+        catch (InfrastructureException ex)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "An error was detected while executing the service.Error:" + ex.Message);
+        }
+    }
 
+    /// <summary>
+    /// Updates the information of an existing bike.
+    /// </summary>
     [HttpPut]
     [Route("Bike")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
@@ -91,6 +118,9 @@ public class BikeController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Changes the state of a bike.
+    /// </summary>
     [HttpPatch("{id:Guid}/State")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -100,6 +130,31 @@ public class BikeController : ControllerBase
         try
         {
             var result = await _bikeService.ChangeStatus(id, state);
+            return Ok(result);
+        }
+        catch (InfrastructureException ex)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "An error was detected while executing the service.Error:" + ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Deletes a bike from the system.
+    /// </summary>
+    [HttpDelete]
+    [Route("Bike")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> DeleteBike([FromQuery, Required] Guid id)
+    {
+        try
+        {
+            var result = await _bikeService.DeleteBike(id);
             return Ok(result);
         }
         catch (InfrastructureException ex)
