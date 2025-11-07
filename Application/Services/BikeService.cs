@@ -76,7 +76,7 @@
                 entity.BikeId = Guid.NewGuid();
                 entity.CreatedAt = DateTime.UtcNow;
                 entity.LastUpdatedAt = DateTime.UtcNow;
-                entity.ChangeState(BikeState.Available);
+                entity.State = BikeState.Available;
 
                 bool res = await _bikeRepository.AddAsync(entity);
 

@@ -35,5 +35,14 @@ namespace Application.Services
                 items = items
             };
         }
+
+        public async Task<UserDto> GetUser(Guid UserId)
+        {
+            if (UserId == Guid.Empty)
+                throw new ApplicationException("Invalid UserId");
+
+
+            
+        }
     }
 }

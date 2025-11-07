@@ -9,5 +9,9 @@
         Task<bool> UpdateBikeInfo(Bike entity);
 
         Task<bool> ChangeStatus(Guid BikeId, BikeState state);
+
+        Task<bool> AddBike(Bike entity);
+
+        Task<bool> DeleteBike(Guid BikeId);
     }
 }

@@ -2,12 +2,21 @@
 {
     public class UserRepository : IUserRepository
     {
-        public Task AddAsync(User entity)
+        private readonly SintronicoDBContext _context;
+        private readonly ILogService<LogService> _log;
+
+        public UserRepository(SintronicoDBContext context, ILogService<LogService> log)
+        {
+            _context = context;
+            _log = log;
+        }
+
+        public Task<bool> AddAsync(User entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(Guid id)
+        public Task<bool> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
@@ -19,7 +28,9 @@
 
         public Task<User?> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var user = _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+
+            return user;
         }
 
         public Task<List<User>> GetPagedAsync(int page, int pageSize, UserRole role)
