@@ -47,11 +47,11 @@ public class BikeController : ControllerBase
     /// <param name="Id">The unique identifier of the bike.</param>
     /// <returns>The bike's information if found; otherwise, an error response.</returns>
     [HttpGet]
-    [Route("Bike/{id:Guid}")]
+    [Route("Bike/{Id:Guid}")]
     [ProducesResponseType(typeof(BikeDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetBike([FromQuery, Required] Guid Id)
+    public async Task<IActionResult> GetBike([FromRoute, Required] Guid Id)
     {
         try
         {

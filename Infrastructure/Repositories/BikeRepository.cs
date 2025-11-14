@@ -1,6 +1,4 @@
-﻿using Serilog;
-
-namespace Infrastructure.Services
+﻿namespace Infrastructure.Services
 {
     public class BikeRepository : IBikeRepository
     {
@@ -15,22 +13,22 @@ namespace Infrastructure.Services
 
         public async Task<bool> AddAsync(Bike entity)
         {
-            try 
+            try
             {
                 _log.LogInfo("BikeRepository.AddAsync - init");
                 var res = false;
-                if (entity == null) 
+                if (entity == null)
                 {
                     throw new InfrastructureException("Bike entity cannot be null.", _log);
                 }
-                
+
                 await _context.Bikes.AddAsync(entity);
 
                 res = await _context.SaveChangesAsync() > 0;
 
                 _log.LogInfo("BikeRepository.AddAsync - finish succesful");
                 return res;
-                }
+            }
             catch (Exception ex)
             {
                 _log.LogError($"BikeRepository.AddAsync - error: {ex.Message}");
@@ -69,7 +67,6 @@ namespace Infrastructure.Services
                 throw new InfrastructureException($"An error occurred while delete information for bike {id}.", _log, ex);
             }
         }
-
 
         public async Task<List<Bike>> GetAllAsync(int page = 1, int pageSize = 10, string? category = null)
         {
