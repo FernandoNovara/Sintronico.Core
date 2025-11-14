@@ -23,7 +23,7 @@ namespace Domain.Entities
         /// <summary>
         /// password hash of the user
         /// </summary>
-        public string PasswordHash { get; set; } = string.Empty;
+        public string PasswordHash { get; private set; } = string.Empty;
         /// <summary>
         /// document of the user
         /// </summary>
@@ -39,11 +39,11 @@ namespace Domain.Entities
         /// <summary>
         /// role of the user
         /// </summary>
-        public UserRole Role { get; set; } = UserRole.Client;
+        public UserRole Role { get; private set; } = UserRole.Client;
         /// <summary>
         /// Date and time when the user was created
         /// </summary>
-        public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public User() { }
 
@@ -64,6 +64,16 @@ namespace Domain.Entities
         public void ChangeEmail(string newEmail)
         {
             Email = newEmail;
+        }
+
+        public void ChangePassword(string NewPass)
+        {
+            PasswordHash = NewPass;
+        }
+
+        public void ChangeRole(UserRole newRole)
+        {
+            Role = newRole;
         }
     }
 }
